@@ -1,13 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User</title>
-    <link rel="stylesheet" href="../css/output.css">
-</head>
-<body>
-    <h1></h1>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.11.0/axios.min.js"
+      integrity="sha512-h9644v03pHqrIHThkvXhB2PJ8zf5E9IyVnrSfZg8Yj8k4RsO4zldcQc4Bi9iVLUCCsqNY0b4WXVV4UB+wbWENA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link rel="stylesheet" href="../css/output.css" />
+  </head>
+  <body>
+    <header class="bg-green-500 w-full h-20 flex items-center justify-center">
+      <nav class="container mx-auto w-400 flex justify-between items-center">
+        <div>
+          <a href="#" class="text-2xl font-bold text-white">ALPhone</a>
+        </div>
+        <div class="flex gap-4 justify-center items-center">
+          <div>
+            <input
+              id="keyword"
+              class="w-80 px-4 py-2 rounded outline-none bg-white"
+              type="text"
+              placeholder="Tìm theo tên, mô tả,..."
+            />
+          </div>
+          <div class="space-x-4">
+            <button
+              id="btnGioHang"
+              aria-label="cart-shopping"
+              class="w-12 px-4 py-2 bg-transparent rounded-xl cursor-pointer font-semibold text-center text-white text-xl relative"
+              type="button"
+            >
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span
+                id="countGioHang"
+                class="absolute top-0 right-0 w-5 h-5 rounded-full flex justify-center items-center text-white text-sm bg-red-500"
+                >0</span
+              >
+            </button>
+
+            <a
+              class="w-24 inline-block px-4 py-2 bg-white shadow hover:shadow-lg rounded-xl cursor-pointer font-semibold text-center"
+              href="../admin/admin.html"
+              >Admin</a
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <!-- Carousel -->
+      <section></section>
+      <!-- loading spinner để chờ call API -->
+      <p id="loading" class="hidden text-center text-blue-600 text-lg">
+        Đang tải sản phẩm...
+      </p>
+      <!-- Sản phẩm -->
+      <section>
+        <div class="p-8">
+          <h2 class="text-center text-3xl font-medium">Danh sách sản phẩm</h2>
+        </div>
+        <!-- Filter theo loại sản phẩm -->
+        <div class="max-w-5xl mx-auto mb-10 flex items-center justify-between">
+          <label class="text-gray-700 italic" for="filterType"
+            >Tìm kiếm sản phẩm theo loại</label
+          >
+          <div class="space-x-4">
+            <select
+              id="filterType"
+              class="w-auto px-8 py-2 bg-white shadow hover:shadow-lg rounded-full cursor-pointer font-semibold text-center"
+              name="Tìm sản phẩm theo loại"
+            >
+              <option value="">Tất cả loại</option>
+              <option value="iphone">Iphone</option>
+              <option value="Samsung">Samsung</option>
+              <option value="OPPO">OPPO</option>
+              <option value="Xiaomi">Xiaomi</option>
+              <option value="Vivo">Vivo</option>
+              <option value="Tecno">Tecno</option>
+            </select>
+            <button
+              type="button"
+              class="w-auto px-8 py-2 bg-white shadow hover:shadow-lg rounded-full cursor-pointer font-semibold text-center"
+              onclick="sapXepSanPham('asc')"
+            >
+              <i class="fa-solid fa-arrow-down-short-wide"></i> Giá Thấp - Cao
+            </button>
+            <button
+              type="button"
+              class="w-auto px-8 py-2 bg-white shadow hover:shadow-lg rounded-full cursor-pointer font-semibold text-center"
+              onclick="sapXepSanPham('desc')"
+            >
+              <i class="fa-solid fa-arrow-down-wide-short"></i> Giá Cao - Thấp
+            </button>
+          </div>
+        </div>
+        <!-- Hiển thị sản phẩm -->
+        <div
+          id="danhSachSP"
+          class="max-w-7xl mx-auto gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center"
+        ></div>
+      </section>
+    </main>
+    <footer></footer>
+    <!-- Popup chi tiết sản phẩm -->
+    <div
+      id="popupChiTiet"
+      class="hidden fixed z-50 inset-0 flex items-center justify-center"
+    >
+      <div id="overlayChiTiet" class="absolute inset-0 bg-black/50"></div>
+      <div class="relative w-[25%] min-h-[70vh] bg-white p-4 rounded-lg">
+        <div id="popupContent"></div>
+        <button
+          id="btnClosePopupChiTiet"
+          class="absolute top-3 right-3 text-gray-600 hover:text-black cursor-pointer"
+          type="button"
+          aria-label="ClosePopupChiTiet"
+        >
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Popup giỏ hàng -->
+    <div
+      id="popupGioHang"
+      class="hidden fixed z-50 inset-0 flex items-center justify-center"
+    >
+      <div id="overlayGioHang" class="absolute inset-0 bg-black/50"></div>
+      <div
+        class="relative w-[25%] h-[80vh] overflow-y-auto bg-white py-12 px-4 rounded-lg"
+      >
+        <div id="gioHangProduct" class="space-y-5"></div>
+        <button
+          id="btnClosePopupGioHang"
+          class="absolute top-3 right-3 text-gray-600 hover:text-black cursor-pointer"
+          type="button"
+          aria-label="ClosePopupGioHang"
+        >
+          <i class="fa-solid fa-x"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Popup thanh toán -->
+    <div>
+      
+    </div>
+
     <script type="module" src="./user.js"></script>
-</body>
+  </body>
 </html>
