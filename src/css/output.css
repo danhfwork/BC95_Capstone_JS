@@ -1094,3 +1094,36 @@
     }
   }
 }
+
+#orderLookupResult img {
+  width: 64px !important;
+  height: 64px !important;
+  object-fit: contain !important;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 4px;
+  background: #fff;
+}
+
+#orderLookupResult .lookup-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+#orderLookupResult .lookup-item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#orderLookupResult .lookup-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}

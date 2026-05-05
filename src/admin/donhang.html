@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý đơn hàng</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/css/admin.css" />
+</head>
+
+<body class="min-h-screen bg-[#eef3f7] font-['Inter',sans-serif] text-slate-800">
+    <div class="flex min-h-screen">
+        <!-- SIDEBAR -->
+        <aside class="hidden lg:block w-[290px] border-r border-slate-200 bg-white">
+            <div class="flex h-full flex-col">
+                <div class="border-b border-slate-200 px-5 py-4">
+                    <h1 class="text-[20px] font-bold text-slate-800">
+                        Quản lý kho điện thoại
+                    </h1>
+                </div>
+
+                <div class="border-b border-slate-200 px-5 py-5">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-full border bg-slate-100 text-sm font-bold text-slate-600">
+                            User
+                        </div>
+
+                        <div>
+                            <h2 class="text-[20px] font-extrabold text-slate-900">
+                                Admin
+                            </h2>
+                            <p class="text-[15px] text-slate-500">
+                                Quản lý đơn hàng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="custom-scroll flex-1 overflow-y-auto px-4 py-4">
+                    <a href="./trangchu.html" class="sidebar-menu-item">
+                        <i class="fa-solid fa-house text-orange-500"></i>
+                        <span>Trang chủ</span>
+                    </a>
+
+                    <a href="./admin.html" class="sidebar-menu-item">
+                        <i class="fa-solid fa-mobile-screen-button text-sky-500"></i>
+                        <span>Sản phẩm</span>
+                    </a>
+
+                    <a href="./donhang.html" class="sidebar-menu-item active">
+                        <i class="fa-solid fa-cart-shopping text-blue-500"></i>
+                        <span>Đơn hàng</span>
+                    </a>
+
+                    <a href="../user/index.html" class="sidebar-menu-item">
+                        <i class="fa-solid fa-store text-emerald-500"></i>
+                        <span>Trang bán hàng</span>
+                    </a>
+
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="flex-1 p-3 lg:p-4">
+            <div class="min-h-[calc(100vh-24px)] rounded-md border border-slate-200 bg-white shadow-sm">
+                <!-- HEADER -->
+                <div class="flex flex-col gap-4 border-b border-slate-200 px-6 py-5 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <p class="text-sm font-extrabold uppercase tracking-wide text-blue-600">
+                            Admin
+                        </p>
+                        <h1 class="text-2xl font-extrabold text-slate-900">
+                            Quản lý đơn hàng
+                        </h1>
+                        <p class="mt-1 text-sm text-slate-500">
+                            Theo dõi và cập nhật tình trạng đơn hàng từ người dùng.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-3 md:flex-row">
+                        <select
+                            id="filterOrderStatus"
+                            class="h-11 rounded-md border border-slate-300 bg-white px-4 font-semibold"
+                        >
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="Chờ xử lý">Chờ xử lý</option>
+                            <option value="Đã xác nhận">Đã xác nhận</option>
+                            <option value="Đang giao">Đang giao</option>
+                            <option value="Hoàn thành">Hoàn thành</option>
+                            <option value="Đã hủy">Đã hủy</option>
+                        </select>
+
+                        <input
+                            id="searchOrderInput"
+                            class="h-11 rounded-md border border-slate-300 px-4"
+                            placeholder="Tìm mã đơn, tên, SĐT..."
+                        />
+
+                        <button
+                            id="btnRefreshOrders"
+                            class="h-11 rounded-md bg-sky-600 px-4 font-bold text-white hover:bg-sky-700"
+                        >
+                            Làm mới
+                        </button>
+                    </div>
+                </div>
+
+                <!-- TABLE -->
+                <div class="custom-scroll overflow-x-auto">
+                    <table class="min-w-[1200px] w-full text-left">
+                        <thead class="border-b border-slate-200 bg-slate-50">
+                            <tr class="text-sm font-extrabold text-slate-700">
+                                <th class="px-5 py-4">Mã đơn</th>
+                                <th class="px-5 py-4">Khách hàng</th>
+                                <th class="px-5 py-4">Số điện thoại</th>
+                                <th class="px-5 py-4">Địa chỉ</th>
+                                <th class="px-5 py-4">Sản phẩm</th>
+                                <th class="px-5 py-4">Tổng tiền</th>
+                                <th class="px-5 py-4">Thanh toán</th>
+                                <th class="px-5 py-4">Ngày đặt</th>
+                                <th class="px-5 py-4">Trạng thái</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="orderTableBody" class="divide-y divide-slate-200">
+                            <!-- JS render -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="border-t border-slate-200 px-6 py-4 text-sm text-slate-600">
+                    Tổng số đơn hàng: <b id="orderTotal">0</b>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="./donhang.js"></script>
+</body>
+</html>

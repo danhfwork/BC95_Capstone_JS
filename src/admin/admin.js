@@ -1,10 +1,9 @@
 // =======================================================
 // ADMIN PRODUCT MANAGEMENT - MOCKAPI
-// Giao diện: Quản lý kho điện thoại
 // Chức năng: Hiển thị, thêm, sửa, xóa, tìm kiếm, lọc loại
 // =======================================================
 
-const API_URL = "https://69f8dc6cf7044aa0103e9375.mockapi.io/api/v1/products";
+const API_URL = "https://69ca67a0ba5984c44bf31946.mockapi.io/api/v1/phone";
 
 let productList = [];
 let currentDeleteId = null;
@@ -116,6 +115,18 @@ const setLoading = (isLoading) => {
     }
 };
 
+const hideEmptyBox = () => {
+    if (el.emptyBox) {
+        el.emptyBox.classList.add("hidden");
+    }
+};
+
+const showEmptyBox = () => {
+    if (el.emptyBox) {
+        el.emptyBox.classList.remove("hidden");
+    }
+};
+
 // =======================================================
 // API
 // =======================================================
@@ -123,13 +134,14 @@ const setLoading = (isLoading) => {
 const fetchProducts = async () => {
     try {
         setLoading(true);
+        hideEmptyBox();
 
         const response = await axios.get(API_URL);
 
         productList = response.data || [];
 
         renderFilterType();
-        renderProducts(productList);
+        renderProducts();
     } catch (error) {
         console.error("Lỗi load sản phẩm:", error);
         showToast("Không tải được sản phẩm từ MockAPI.", "error");
@@ -165,9 +177,11 @@ const renderFilterType = () => {
 
     el.filterType.innerHTML = `
         <option value="all">Tất cả</option>
-        ${uniqueTypes.map((type) => {
-            return `<option value="${type}">${type}</option>`;
-        }).join("")}
+        ${uniqueTypes
+            .map((type) => {
+                return `<option value="${type}">${type}</option>`;
+            })
+            .join("")}
     `;
 
     if (uniqueTypes.includes(currentValue)) {
@@ -224,100 +238,98 @@ const renderProducts = () => {
 
     if (!list.length) {
         el.productTableBody.innerHTML = "";
-
-        if (el.emptyBox) {
-            el.emptyBox.classList.remove("hidden");
-        }
-
+        showEmptyBox();
         return;
     }
 
-    if (el.emptyBox) {
-        el.emptyBox.classList.add("hidden");
-    }
+    hideEmptyBox();
 
-    const content = list.map((product) => {
-        return `
-            <tr class="transition hover:bg-sky-50">
-                <td class="px-5 py-4 font-semibold text-slate-700">
-                    ${product.id || ""}
-                </td>
+    const content = list
+        .map((product) => {
+            return `
+                <tr class="transition hover:bg-sky-50">
+                    <td class="px-5 py-4 font-semibold text-slate-700">
+                        ${product.id || ""}
+                    </td>
 
-                <td class="px-5 py-4">
-                    <div class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-md border border-slate-200 bg-slate-50">
-                        <img
-                            src="${product.img || getDefaultImage()}"
-                            alt="${product.name || "Product"}"
-                            class="h-full w-full object-contain p-1"
-                            onerror="this.src='${getDefaultImage()}'"
-                        />
-                    </div>
-                </td>
+                    <td class="px-5 py-4">
+                        <div class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-md border border-slate-200 bg-slate-50">
+                            <img
+                                src="${product.img || getDefaultImage()}"
+                                alt="${product.name || "Product"}"
+                                class="h-full w-full object-contain p-1"
+                                onerror="this.src='${getDefaultImage()}'"
+                            />
+                        </div>
+                    </td>
 
-                <td class="px-5 py-4">
-                    <p class="max-w-[220px] truncate font-bold text-slate-900">
-                        ${product.name || ""}
-                    </p>
-                </td>
+                    <td class="px-5 py-4">
+                        <p class="max-w-[220px] truncate font-bold text-slate-900">
+                            ${product.name || ""}
+                        </p>
+                    </td>
 
-                <td class="px-5 py-4 font-semibold text-slate-800">
-                    ${formatPrice(product.price)}
-                </td>
+                    <td class="px-5 py-4 font-semibold text-slate-800">
+                        ${formatPrice(product.price)}
+                    </td>
 
-                <td class="px-5 py-4">
-                    <span class="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700">
-                        ${product.type || ""}
-                    </span>
-                </td>
+                    <td class="px-5 py-4">
+                        <span class="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700">
+                            ${product.type || ""}
+                        </span>
+                    </td>
 
-                <td class="px-5 py-4">
-                    <p class="max-w-[140px] truncate text-slate-700">
-                        ${product.screen || ""}
-                    </p>
-                </td>
+                    <td class="px-5 py-4">
+                        <p class="max-w-[140px] truncate text-slate-700">
+                            ${product.screen || ""}
+                        </p>
+                    </td>
 
-                <td class="px-5 py-4">
-                    <p class="max-w-[180px] truncate text-slate-700">
-                        ${product.backCamera || ""}
-                    </p>
-                </td>
+                    <td class="px-5 py-4">
+                        <p class="max-w-[180px] truncate text-slate-700">
+                            ${product.backCamera || ""}
+                        </p>
+                    </td>
 
-                <td class="px-5 py-4">
-                    <p class="max-w-[150px] truncate text-slate-700">
-                        ${product.frontCamera || ""}
-                    </p>
-                </td>
+                    <td class="px-5 py-4">
+                        <p class="max-w-[150px] truncate text-slate-700">
+                            ${product.frontCamera || ""}
+                        </p>
+                    </td>
 
-                <td class="px-5 py-4">
-                    <p class="max-w-[220px] truncate text-slate-600">
-                        ${product.desc || ""}
-                    </p>
-                </td>
+                    <td class="px-5 py-4">
+                        <p class="max-w-[220px] truncate text-slate-600">
+                            ${product.desc || ""}
+                        </p>
+                    </td>
 
-                <td class="px-5 py-4 text-right">
-                    <div class="flex justify-end gap-2">
-                        <button
-                            data-action="edit"
-                            data-id="${product.id}"
-                            class="rounded-md bg-blue-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-blue-600"
-                        >
-                            Sửa
-                        </button>
+                    <td class="px-5 py-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button
+                                type="button"
+                                data-action="edit"
+                                data-id="${product.id}"
+                                class="table-action-btn btn-edit"
+                            >
+                                Sửa
+                            </button>
 
-                        <button
-                            data-action="delete"
-                            data-id="${product.id}"
-                            class="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600"
-                        >
-                            Xóa
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        `;
-    });
+                            <button
+                                type="button"
+                                data-action="delete"
+                                data-id="${product.id}"
+                                class="table-action-btn btn-delete"
+                            >
+                                Xóa
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        })
+        .join("");
 
-    el.productTableBody.innerHTML = content.join("");
+    el.productTableBody.innerHTML = content;
 };
 
 // =======================================================
@@ -516,7 +528,10 @@ const addEventListeners = () => {
         openModal("add");
     });
 
-    el.btnRefresh.addEventListener("click", fetchProducts);
+    el.btnRefresh.addEventListener("click", async () => {
+        await fetchProducts();
+        showToast("Đã làm mới danh sách sản phẩm.", "info");
+    });
 
     el.productForm.addEventListener("submit", handleSubmit);
 
@@ -536,6 +551,12 @@ const addEventListeners = () => {
 
         if (action === "edit") {
             const product = productList.find((item) => String(item.id) === String(id));
+
+            if (!product) {
+                showToast("Không tìm thấy sản phẩm cần sửa.", "error");
+                return;
+            }
+
             openModal("edit", product);
         }
 
