@@ -17,7 +17,7 @@ export const renderDanhSachSP = (danhSach) => {
             class="w-65 h-fit bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all cursor-pointer p-5"
           >
             <img
-              class="w-full h-auto"
+              class="w-full h-fit"
               src="${phone.img}"
               alt="${phone.name}"
             />

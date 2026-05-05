@@ -19,11 +19,16 @@ export const el = {
     gioHangProduct: document.getElementById('gioHangProduct'),
     // Giỏ hàng
     btnGioHang: document.getElementById('btnGioHang'),
-    countGioHang: document.getElementById('countGioHang')
+    countGioHang: document.getElementById('countGioHang'),
+    // Thanh toán
+    popupThanhToan: document.getElementById('popupThanhToan'),
+    datHangContent: document.getElementById('datHangContent'),
+    overlayThanhToan: document.getElementById('overlayThanhToan'),
 }
 
 export const state = {
     danhSachSP: [],
     timerId: null,
     gioHang: [],
+    orderList: [],
 }

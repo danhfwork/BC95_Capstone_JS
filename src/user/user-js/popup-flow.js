@@ -95,9 +95,46 @@ const closePopupChiTiet = () => {
 export const closePopupGioHang = () => {
   el.popupGioHang.classList.add("hidden");
 };
+export const closePopupThanhToan = () => {
+  el.popupThanhToan.classList.add("hidden");
+};
 export const bindClosePopup = () => {
   el.btnClosePopupChiTiet.addEventListener("click", closePopupChiTiet);
   el.overlayChiTiet.addEventListener("click", closePopupChiTiet);
   el.overlayGioHang.addEventListener("click", closePopupGioHang);
   el.btnClosePopupGioHang.addEventListener("click", closePopupGioHang);
+  el.overlayThanhToan.addEventListener("click", closePopupThanhToan);
+};
+
+// Show Message
+export const showMessage = (title, icon = "success", callback = null) => {
+  if (callback) {
+    Swal.fire({
+      title: title,
+      text: "Hành động này không thể hoàn tác!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý!",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        callback();
+      }
+    });
+  } else {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "center",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+
+    Toast.fire({
+      icon: icon,
+      title: title,
+    });
+  }
 };
