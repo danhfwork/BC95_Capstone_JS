@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang chủ Admin</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/src/css/admin.css" />
+</head>
+
+<body class="min-h-screen bg-[#eef3f7] font-['Inter',sans-serif] text-slate-800">
+    <div class="flex min-h-screen">
+        <!-- SIDEBAR -->
+        <aside class="hidden lg:block w-[290px] border-r border-slate-200 bg-white">
+            <div class="flex h-full flex-col">
+                <div class="border-b border-slate-200 px-5 py-4">
+                    <h1 class="text-[20px] font-bold text-slate-800">
+                        Quản lý kho điện thoại
+                    </h1>
+                </div>
+
+                <div class="border-b border-slate-200 px-5 py-5">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-full border bg-slate-100 text-sm font-bold text-slate-600">
+                            User
+                        </div>
+
+                        <div>
+                            <h2 class="text-[20px] font-extrabold text-slate-900">
+                                Admin
+                            </h2>
+                            <p class="text-[15px] text-slate-500">
+                                Quản lý hệ thống
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="custom-scroll flex-1 overflow-y-auto px-4 py-4">
+                    <a href="./trangchu.html" class="sidebar-menu-item active">
+                        <i class="fa-solid fa-house text-orange-500"></i>
+                        <span>Trang chủ</span>
+                    </a>
+
+                    <a href="./admin.html" class="sidebar-menu-item">
+                        <i class="fa-solid fa-mobile-screen-button text-sky-500"></i>
+                        <span>Sản phẩm</span>
+                    </a>
+
+
+                    <a href="./donhang.html" class="sidebar-menu-item">
+                        <i class="fa-solid fa-cart-shopping text-blue-500"></i>
+                        <span>Đơn hàng</span>
+                    </a>
+
+                    <a href="../user/index.html" class="sidebar-menu-item">
+                        <i class="fa-solid fa-store text-emerald-500"></i>
+                        <span>Trang bán hàng</span>
+                    </a>
+
+                </nav>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="flex-1 p-3 lg:p-4">
+            <div class="min-h-[calc(100vh-24px)] rounded-md border border-slate-200 bg-white shadow-sm">
+                <!-- INTRO -->
+                <section class="border-b border-slate-200 px-6 py-8">
+                    <p class="text-sm font-extrabold uppercase tracking-wide text-blue-600">
+                        Admin Dashboard
+                    </p>
+
+                    <h1 class="mt-1 text-3xl font-extrabold text-slate-900">
+                        Trang chủ quản trị ALPhone
+                    </h1>
+
+                    <p class="mt-3 max-w-3xl text-[15px] leading-7 text-slate-600">
+                        Đây là khu vực quản trị của website bán điện thoại ALPhone.
+                        Admin có thể xem tổng quan kho hàng, quản lý sản phẩm và theo dõi đơn hàng của người dùng.
+                    </p>
+                </section>
+
+                <!-- OVERVIEW CARDS -->
+                <section class="grid gap-5 px-6 py-6 md:grid-cols-2 xl:grid-cols-4">
+                    <div class="rounded-xl border border-slate-200 bg-sky-50 p-5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-bold text-slate-500">
+                                    Tổng sản phẩm
+                                </p>
+
+                                <h2 id="totalProducts" class="mt-2 text-4xl font-extrabold text-slate-900">
+                                    0
+                                </h2>
+                            </div>
+
+                            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 text-2xl text-sky-600">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 bg-emerald-50 p-5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-bold text-slate-500">
+                                    Số hãng
+                                </p>
+
+                                <h2 id="totalBrands" class="mt-2 text-4xl font-extrabold text-slate-900">
+                                    0
+                                </h2>
+                            </div>
+
+                            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl text-emerald-600">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 bg-orange-50 p-5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-bold text-slate-500">
+                                    Hãng nhiều nhất
+                                </p>
+
+                                <h2 id="topBrand" class="mt-2 text-2xl font-extrabold text-slate-900">
+                                    Đang tải...
+                                </h2>
+                            </div>
+
+                            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-orange-100 text-2xl text-orange-600">
+                                <i class="fa-solid fa-chart-simple"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 bg-purple-50 p-5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-bold text-slate-500">
+                                    Tổng đơn hàng
+                                </p>
+
+                                <h2 id="totalOrders" class="mt-2 text-4xl font-extrabold text-slate-900">
+                                    0
+                                </h2>
+                            </div>
+
+                            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-purple-100 text-2xl text-purple-600">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BRAND OVERVIEW -->
+                <section class="px-6 pb-6">
+                    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                            <div>
+                                <h2 class="text-xl font-extrabold text-slate-900">
+                                    Tổng quan hãng điện thoại
+                                </h2>
+
+                                <p class="mt-1 text-sm text-slate-500">
+                                    Thống kê nhanh số lượng sản phẩm theo từng hãng.
+                                </p>
+                            </div>
+
+                            <button
+                                id="btnRefreshHome"
+                                class="rounded-md bg-sky-600 px-4 py-2 text-sm font-bold text-white hover:bg-sky-700"
+                            >
+                                <i class="fa-solid fa-rotate-right mr-1"></i>
+                                Làm mới
+                            </button>
+                        </div>
+
+                        <div id="brandOverview" class="mt-5 flex flex-wrap gap-3">
+                            <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-500">
+                                Đang tải dữ liệu...
+                            </span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- QUICK LINKS -->
+                <section class="grid gap-5 px-6 pb-6 md:grid-cols-3">
+                    <a
+                        href="./admin.html"
+                        class="rounded-xl border border-slate-200 bg-slate-50 p-5 transition hover:bg-sky-50"
+                    >
+                        <i class="fa-solid fa-mobile-screen-button text-xl text-sky-500"></i>
+                        <h3 class="mt-3 font-extrabold text-slate-900">
+                            Quản lý sản phẩm
+                        </h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            Thêm, sửa, xóa và tìm kiếm sản phẩm.
+                        </p>
+                    </a>
+
+                    <a
+                        href="./donhang.html"
+                        class="rounded-xl border border-slate-200 bg-slate-50 p-5 transition hover:bg-blue-50"
+                    >
+                        <i class="fa-solid fa-cart-shopping text-xl text-blue-500"></i>
+                        <h3 class="mt-3 font-extrabold text-slate-900">
+                            Quản lý đơn hàng
+                        </h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            Xem và cập nhật trạng thái đơn hàng.
+                        </p>
+                    </a>
+
+                    <a
+                        href="../user/index.html"
+                        class="rounded-xl border border-slate-200 bg-slate-50 p-5 transition hover:bg-emerald-50"
+                    >
+                        <i class="fa-solid fa-store text-xl text-emerald-500"></i>
+                        <h3 class="mt-3 font-extrabold text-slate-900">
+                            Trang bán hàng
+                        </h3>
+                        <p class="mt-1 text-sm text-slate-500">
+                            Xem giao diện mua hàng của người dùng.
+                        </p>
+                    </a>
+                </section>
+
+                <!-- STATUS -->
+                <section class="px-6 pb-6">
+                    <div class="rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
+                        <b>Trạng thái dữ liệu:</b>
+                        <span id="dataStatus">Đang tải...</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const API_URL = "https://69ca67a0ba5984c44bf31946.mockapi.io/api/v1/phone";
+        const ORDER_STORAGE_KEY = "ORDER_LIST";
+
+        const totalProducts = document.getElementById("totalProducts");
+        const totalBrands = document.getElementById("totalBrands");
+        const topBrand = document.getElementById("topBrand");
+        const totalOrders = document.getElementById("totalOrders");
+        const brandOverview = document.getElementById("brandOverview");
+        const dataStatus = document.getElementById("dataStatus");
+        const btnRefreshHome = document.getElementById("btnRefreshHome");
+
+        const normalizeBrand = (type) => {
+            if (!type) return "Khác";
+
+            const brand = String(type).trim();
+            const lowerBrand = brand.toLowerCase();
+
+            if (lowerBrand === "iphone") return "Iphone";
+            if (lowerBrand === "samsung") return "Samsung";
+            if (lowerBrand === "oppo") return "OPPO";
+            if (lowerBrand === "xiaomi") return "Xiaomi";
+            if (lowerBrand === "vivo") return "Vivo";
+            if (lowerBrand === "tecno") return "Tecno";
+            if (lowerBrand === "realme") return "Realme";
+
+            return brand;
+        };
+
+        const getOrdersFromLocalStorage = () => {
+            const data = localStorage.getItem(ORDER_STORAGE_KEY);
+
+            if (!data) return [];
+
+            try {
+                return JSON.parse(data);
+            } catch (error) {
+                console.error("ORDER_LIST không hợp lệ:", error);
+                return [];
+            }
+        };
+
+        const renderDashboard = (products) => {
+            const brandMap = {};
+
+            products.forEach((product) => {
+                const brand = normalizeBrand(product.type);
+                brandMap[brand] = (brandMap[brand] || 0) + 1;
+            });
+
+            const brands = Object.entries(brandMap).sort((a, b) => b[1] - a[1]);
+            const orders = getOrdersFromLocalStorage();
+
+            totalProducts.textContent = products.length;
+            totalBrands.textContent = brands.length;
+            totalOrders.textContent = orders.length;
+
+            if (brands.length > 0) {
+                topBrand.textContent = `${brands[0][0]} (${brands[0][1]})`;
+            } else {
+                topBrand.textContent = "Chưa có";
+            }
+
+            if (!brands.length) {
+                brandOverview.innerHTML = `
+                    <span class="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-500">
+                        Chưa có dữ liệu hãng
+                    </span>
+                `;
+                return;
+            }
+
+            brandOverview.innerHTML = brands
+                .map(([brand, count]) => {
+                    return `
+                        <span class="rounded-full bg-sky-50 px-4 py-2 text-sm font-bold text-sky-700">
+                            ${brand}: ${count}
+                        </span>
+                    `;
+                })
+                .join("");
+        };
+
+        const loadHomeData = async () => {
+            try {
+                dataStatus.textContent = "Đang tải dữ liệu...";
+
+                const response = await axios.get(API_URL);
+                const products = response.data || [];
+
+                renderDashboard(products);
+
+                dataStatus.textContent = "Đã kết nối dữ liệu sản phẩm và đơn hàng.";
+            } catch (error) {
+                console.error("Lỗi tải dữ liệu trang chủ:", error);
+
+                totalProducts.textContent = "0";
+                totalBrands.textContent = "0";
+                topBrand.textContent = "Lỗi";
+                totalOrders.textContent = getOrdersFromLocalStorage().length;
+
+                brandOverview.innerHTML = `
+                    <span class="rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-red-600">
+                        Không thể tải dữ liệu sản phẩm
+                    </span>
+                `;
+
+                dataStatus.textContent = "Lỗi kết nối MockAPI.";
+            }
+        };
+
+        btnRefreshHome.addEventListener("click", loadHomeData);
+
+        loadHomeData();
+    </script>
+</body>
+</html>
