@@ -71,7 +71,9 @@ const getOrderTotal = (order) => {
 };
 
 const getCustomerName = (order) => {
-  return order.customer || order.customerName || order.name || order.hoTen || "";
+  return (
+    order.customer || order.customerName || order.name || order.hoTen || ""
+  );
 };
 
 const getPhone = (order) => {
@@ -87,7 +89,12 @@ const getOrderDate = (order) => {
 };
 
 const getPaymentMethod = (order) => {
-  return order.paymentMethod || order.payment || order.phuongThucThanhToan || "Chưa có";
+  return (
+    order.paymentMethod ||
+    order.payment ||
+    order.phuongThucThanhToan ||
+    "Chưa có"
+  );
 };
 
 const getProductName = (item) => {
@@ -160,28 +167,30 @@ const renderOrders = (orders) => {
         ? items
             .map((item) => {
               return `
-                <div class="lookup-item">
-                  <div class="lookup-item-info">
-                    <img
-                      src="${getProductImage(item)}"
-                      alt="${getProductName(item)}"
-                    />
-
-                    <div>
-                      <p class="font-semibold text-gray-800">
-                        ${getProductName(item)}
-                      </p>
-
-                      <p class="text-sm text-gray-500">
-                        Số lượng: ${getProductQuantity(item)}
-                      </p>
+                    <div class="lookup-item flex items-center justify-between p-4 border-b border-gray-100 gap-4">
+                      <div class="flex items-center gap-4 flex-1">
+                        <div class="w-20 h-20 shrink-0 bg-gray-50 rounded-lg overflow-hidden">
+                          <img
+                            src="${getProductImage(item)}"
+                            alt="img"
+                            class="w-full h-full object-contain"
+                          />
+                        </div>
+                        <div class="flex flex-col">
+                          <p class="font-semibold text-gray-800 line-clamp-2 leading-tight">
+                            ${getProductName(item)}
+                          </p>
+                          <p class="text-sm text-gray-500 mt-1">
+                            Số lượng: <span class="font-medium text-gray-700">${getProductQuantity(item)}</span>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="text-right shrink-0">
+                        <p class="font-bold text-blue-600 text-lg">
+                          ${formatPrice(getProductPrice(item))}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-
-                  <p class="font-bold text-gray-800">
-                    ${formatPrice(getProductPrice(item))}
-                  </p>
-                </div>
               `;
             })
             .join("")
@@ -224,7 +233,7 @@ const renderOrders = (orders) => {
             ${itemHtml}
           </div>
 
-          <div class="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
+          <div class="mt-4 flex items-center justify-between border-t border-b border-gray-100 pt-4">
             <span class="font-bold text-gray-800">Tổng tiền</span>
 
             <span class="text-lg font-bold text-red-600">

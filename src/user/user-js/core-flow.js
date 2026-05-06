@@ -29,6 +29,6 @@ export const el = {
 export const state = {
     danhSachSP: [],
     timerId: null,
-    gioHang: [],
-    orderList: [],
+    gioHang: JSON.parse(localStorage.getItem("GIO_HANG")) || [],
+    orderList: JSON.parse(localStorage.getItem("ORDER_LIST")) || [],
 }
