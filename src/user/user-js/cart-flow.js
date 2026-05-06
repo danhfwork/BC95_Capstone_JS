@@ -156,6 +156,8 @@ const valid = () => {
   const hoTen = document.getElementById("hoTen").value.trim();
   const phoneNumber = document.getElementById("phoneNumber").value.trim();
   const address = document.getElementById("address").value.trim();
+  const paymentMethodEl = document.querySelector('input[name="payment"]:checked');
+  const paymentMethod = paymentMethodEl ? paymentMethodEl.value : "";
   const errors = {};
 
   const errorElements = document.querySelectorAll('[id^="error-"]');
@@ -174,7 +176,7 @@ const valid = () => {
   return {
     isValid: Object.keys(errors).length === 0,
     errors,
-    data: { hoTen, phoneNumber, address },
+    data: { hoTen, phoneNumber, address, paymentMethod },
   };
 };
 const datHang = () => {
@@ -193,7 +195,7 @@ const datHang = () => {
     });
     return;
   }
-  const { hoTen, phoneNumber, address } = check.data;
+  const { hoTen, phoneNumber, address, paymentMethod } = check.data;
   showMessage(
     `Bạn có chắc chắn muốn thanh toán đơn hàng này?`,
     "warning",
@@ -203,6 +205,7 @@ const datHang = () => {
         customer: hoTen,
         phone: phoneNumber,
         address: address,
+        payment: paymentMethod,
         items: [...state.gioHang],
         total: tinhTongTien(state.gioHang),
         date: new Date().toLocaleString("vi-VN"),
