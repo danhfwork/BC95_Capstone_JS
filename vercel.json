@@ -1,10 +1,11 @@
 {
+  "outputDirectory": "src",
   "rewrites": [
     { "source": "/", "destination": "src/user/index.html" },
     { "source": "/admin", "destination": "src/admin/admin.html" },
     { "source": "/donhang", "destination": "src/admin/donhang.html" },
     { "source": "/trangchu", "destination": "src/admin/trangchu.html" },
-    
+
     { "source": "/(.*)", "destination": "src/$1" }
   ]
 }
