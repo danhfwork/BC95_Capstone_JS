@@ -1,11 +1,14 @@
 {
   "outputDirectory": "src",
   "rewrites": [
-    { "source": "/", "destination": "src/user/index.html" },
-    { "source": "/admin", "destination": "src/admin/admin.html" },
-    { "source": "/donhang", "destination": "src/admin/donhang.html" },
-    { "source": "/trangchu", "destination": "src/admin/trangchu.html" },
-
-    { "source": "/(.*)", "destination": "src/$1" }
+    { "source": "/", "destination": "/user/index.html" },
+    { "source": "/user/index.html", "destination": "/user/index.html" },
+    { "source": "/admin/admin.html", "destination": "/admin/admin.html" },
+    { "source": "/admin/admin.js", "destination": "/admin/admin.js" },
+    { "source": "/admin/donhang.html", "destination": "/admin/donhang.html" },
+    { "source": "/donhang.js", "destination": "/admin/donhang.js" },
+    { "source": "/admin/trangchu.html", "destination": "/admin/trangchu.html" },
+    { "source": "/css/:file", "destination": "/src/css/:file" },
+    { "source": "/src/img/:file", "destination": "/src/img/:file" }
   ]
 }
