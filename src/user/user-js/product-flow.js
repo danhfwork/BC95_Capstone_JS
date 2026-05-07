@@ -51,22 +51,14 @@ export const renderDanhSachSP = (danhSach) => {
 export const layDanhSachSP = async () => {
   el.loading.classList.remove("hidden");
   try {
-    // 1. Phá cache bằng cách thêm timestamp (Vercel rất cần cái này)
-    const response = await axios.get(`${API_URL}?t=${Date.now()}`);
-
-    // 2. Đảm bảo luôn luôn là một mảng (giống bên Admin)
-    state.danhSachSP = response.data || []; 
-
-    // 3. Kiểm tra mảng trước khi render
-    if (state.danhSachSP.length === 0) {
-       el.danhSachSP.innerHTML = `<p class="text-center">Hiện chưa có sản phẩm nào.</p>`;
-    } else {
-       renderDanhSachSP(state.danhSachSP);
-    }
-
+    const response = await axios.get(API_URL);
+    state.danhSachSP = response.data;
+    renderDanhSachSP(state.danhSachSP);
   } catch (error) {
-    el.danhSachSP.innerHTML = `<p class="text-red-500 text-center">Lỗi tải dữ liệu</p>`;
-    console.error("Lỗi User API:", error);
+    el.danhSachSP.innerHTML = `
+            <p class="text-red-500 text-center">Lỗi tải dữ liệu</p>
+        `;
+    console.log(error);
   } finally {
     el.loading.classList.add("hidden");
   }
