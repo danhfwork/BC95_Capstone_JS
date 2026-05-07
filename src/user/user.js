@@ -11,9 +11,7 @@ bindFilterEvent()
 
 el.btnGioHang.addEventListener('click', renderGioHang)
 
-window.onload = () => {
-    layDanhSachSP();
-};
+layDanhSachSP();
 
 
 
