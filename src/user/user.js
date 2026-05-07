@@ -10,7 +10,10 @@ bindClosePopup()
 bindFilterEvent()
 
 el.btnGioHang.addEventListener('click', renderGioHang)
-layDanhSachSP()
+
+document.addEventListener("DOMContentLoaded", () => {
+    layDanhSachSP();
+});
 
 
 
