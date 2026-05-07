@@ -7,7 +7,7 @@ export const renderDanhSachSP = (danhSach) => {
 
   if (!danhSach || danhSach.length === 0) {
     el.danhSachSP.innerHTML = `
-         <p> class="text-gray-500 text-center">Không tìm thấy sản phẩm nào</p>
+         <p class="text-gray-500 text-center"> Không tìm thấy sản phẩm nào</p>
         `;
     return;
   }
@@ -53,7 +53,7 @@ export const layDanhSachSP = async () => {
   try {
     const response = await axios.get(API_URL);
     state.danhSachSP = response.data || [];
-    renderDanhSachSP();
+    renderDanhSachSP(state.danhSachSP);
   } catch (error) {
     el.danhSachSP.innerHTML = `
             <p class="text-red-500 text-center">Lỗi tải dữ liệu</p>
