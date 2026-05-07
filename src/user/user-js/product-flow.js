@@ -5,7 +5,7 @@ import { showChiTietSP } from "./popup-flow.js";
 export const renderDanhSachSP = (danhSach) => {
   el.danhSachSP.innerHTML = "";
 
-  if (state.danhSachSP === 0) {
+  if (!danhSach || danhSach.length === 0) {
     el.danhSachSP.innerHTML = `
          <p> class="text-gray-500 text-center">Không tìm thấy sản phẩm nào</p>
         `;
@@ -51,7 +51,7 @@ export const renderDanhSachSP = (danhSach) => {
 export const layDanhSachSP = async () => {
   el.loading.classList.remove("hidden");
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(`${API_URL}?t=${Date.now()}`);
     state.danhSachSP = response.data;
     renderDanhSachSP(state.danhSachSP);
   } catch (error) {
