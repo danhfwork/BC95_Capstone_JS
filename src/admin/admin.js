@@ -135,11 +135,8 @@ const fetchProducts = async () => {
     try {
         setLoading(true);
         hideEmptyBox();
-
         const response = await axios.get(API_URL);
-
         productList = response.data || [];
-
         renderFilterType();
         renderProducts();
     } catch (error) {
