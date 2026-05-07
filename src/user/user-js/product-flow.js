@@ -48,37 +48,21 @@ export const renderDanhSachSP = (danhSach) => {
 };
 
 // Lấy danh sách sản phẩm
-
-const layDanhSachSP = async () => {
+export const layDanhSachSP = async () => {
+  el.loading.classList.remove("hidden");
   try {
-    setLoading(true);
-    hideEmptyBox();
     const response = await axios.get(API_URL);
-    productList = response.data || [];
+    state.danhSachSP = response.data || [];
     renderDanhSachSP();
   } catch (error) {
-    console.error("Lỗi load sản phẩm:", error);
-    showToast("Không tải được sản phẩm từ MockAPI.", "error");
+    el.danhSachSP.innerHTML = `
+            <p class="text-red-500 text-center">Lỗi tải dữ liệu</p>
+        `;
+    console.log(error);
   } finally {
-    setLoading(false);
+    el.loading.classList.add("hidden");
   }
 };
-
-// export const layDanhSachSP = async () => {
-//   el.loading.classList.remove("hidden");
-//   try {
-//     const response = await axios.get(API_URL);
-//     state.danhSachSP = response.data || [];
-//     renderDanhSachSP();
-//   } catch (error) {
-//     el.danhSachSP.innerHTML = `
-//             <p class="text-red-500 text-center">Lỗi tải dữ liệu</p>
-//         `;
-//     console.log(error);
-//   } finally {
-//     el.loading.classList.add("hidden");
-//   }
-// };
 
 // Sắp xếp sản phẩm
 
