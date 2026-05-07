@@ -11,9 +11,9 @@ bindFilterEvent()
 
 el.btnGioHang.addEventListener('click', renderGioHang)
 
-document.addEventListener("DOMContentLoaded", () => {
+window.onload = () => {
     layDanhSachSP();
-});
+};
 
 
 
