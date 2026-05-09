@@ -104,6 +104,7 @@ export const bindClosePopup = () => {
   el.overlayGioHang.addEventListener("click", closePopupGioHang);
   el.btnClosePopupGioHang.addEventListener("click", closePopupGioHang);
   el.overlayThanhToan.addEventListener("click", closePopupThanhToan);
+  el.btnCloseThanhToan.addEventListener("click", closePopupThanhToan);
 };
 
 // Show Message

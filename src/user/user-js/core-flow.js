@@ -25,6 +25,7 @@ export const el = {
   popupThanhToan: document.getElementById("popupThanhToan"),
   datHangContent: document.getElementById("datHangContent"),
   overlayThanhToan: document.getElementById("overlayThanhToan"),
+  btnCloseThanhToan: document.getElementById("btnCloseThanhToan")
 };
 
 export const state = {
