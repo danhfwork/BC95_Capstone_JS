@@ -3,7 +3,7 @@
   "rewrites": [
     { "source": "/", "destination": "/user/index.html" },
     { "source": "/user/index.html", "destination": "/user/index.html" },
-    { "source": "/user/user/user.js", "destination": "/user/user.js" },
+    { "source": "/user/user.js", "destination": "/user/user.js" },
     { "source": "/user/user-js/order-lookup-flow.js", "destination": "/user/user-js/order-lookup-flow.js" },
     { "source": "/admin/admin.html", "destination": "/admin/admin.html" },
     { "source": "/admin/admin.js", "destination": "/admin/admin.js" },
